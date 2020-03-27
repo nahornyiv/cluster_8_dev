@@ -29,7 +29,7 @@ textarea {
   background: $input-bg;
 
   &:not(textarea) {
-    @include media('≥tablet') {
+    @include media-breakpoint-up(md) {
       height: rem-calc(48);
     }
   }

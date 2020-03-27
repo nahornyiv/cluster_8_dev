@@ -20,8 +20,8 @@ $media-expressions: (
 );
 
 // ligatured operators ≥ ≤
-
-@import 'vendors/include-media';
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/mixins/breakpoints';
 @import 'vendors/gutenberg';
 
 @import 'base/utilities';
