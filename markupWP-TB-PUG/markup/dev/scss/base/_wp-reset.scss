@@ -23,6 +23,12 @@
     float: left;
     margin-right: 5px;
 
+    &[type='password'],
+    &[type='search'] {
+      width: calc(100% - 105px);
+      height: $input-height;
+    }
+
     #sidebar & {
       @include media-breakpoint-up(md) {
         width: 100%;
@@ -32,7 +38,23 @@
 
     &[type='submit'] {
       margin: 0;
-      padding: $input-btn-padding-y $input-btn-padding-x;
+      width: 100px;
+      padding: $btn-padding-y $btn-padding-x;
+      font-family: $btn-font-family;
+      font-weight: $btn-font-weight;
+      font-size: $btn-font-size;
+      line-height: $btn-line-height;
+      border-width: $btn-border-width;
+      box-shadow: $btn-box-shadow;
+      border-radius: $btn-border-radius;
+      background: $btn-background;
+      color: $btn-color;
+      height: $input-height;
+
+      &:hover {
+        text-decoration: none;
+        background: $link-hover-color;
+      }
     }
   }
 }
@@ -42,7 +64,7 @@
 .navigation-comments {
   position: relative;
   vertical-align: middle;
-  margin: 0 -3px $vertical-rhythm;
+  margin: 0 0 $vertical-rhythm;
 
   .screen-reader-text {
     position: absolute;
@@ -66,6 +88,21 @@
     display: inline-block;
     vertical-align: middle;
     max-width: 49%;
+    padding: $btn-padding-y $btn-padding-x;
+    font-family: $btn-font-family;
+    font-weight: $btn-font-weight;
+    font-size: $btn-font-size;
+    line-height: $btn-line-height;
+    border-width: $btn-border-width;
+    box-shadow: $btn-box-shadow;
+    border-radius: $btn-border-radius;
+    background: $btn-background;
+    color: $btn-color;
+
+    &:hover {
+      text-decoration: none;
+      background: $link-hover-color;
+    }
 
     @include media-breakpoint-down(md) {
       font-size: 0;
@@ -115,6 +152,20 @@
       text-decoration: none;
       display: flex;
       flex-direction: column;
+      padding: $btn-padding-y $btn-padding-x;
+      font-family: $btn-font-family;
+      font-weight: $btn-font-weight;
+      font-size: $btn-font-size;
+      line-height: $btn-line-height;
+      border-width: $btn-border-width;
+      box-shadow: $btn-box-shadow;
+      border-radius: $btn-border-radius;
+      background: $btn-background;
+      color: $btn-color;
+
+      &:hover {
+        background: $link-hover-color;
+      }
 
       @include media-breakpoint-up(md) {
         flex-direction: row;
