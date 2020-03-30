@@ -29,6 +29,7 @@ section {
 }
 
 body {
+  width: 100%;
   color: $base-text-color;
   background: $base-background-body;
   font: #{$font-size-base}/#{$line-height-base} $base-font-family;

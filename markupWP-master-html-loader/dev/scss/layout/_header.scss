@@ -18,29 +18,28 @@
 #nav {
   @extend %clearfix;
 
-  position: relative;
   flex-grow: 1;
 }
 
 .nav-drop {
   @include animate(all);
 
-  background: $mobile-nav-drop-bg;
-  color: $mobile-nav-drop-color;
+  background: $gray;
+  color: $black;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   z-index: 999;
+  padding: 10px 15px;
   opacity: 0;
   visibility: hidden;
 
   @include media('≥tablet') {
+    padding: 0;
     position: static;
     opacity: 1;
     visibility: visible;
-    color: $nav-color;
-    background: none;
   }
 
   .nav-active & {
@@ -65,7 +64,10 @@
     list-style: none;
 
     + li {
-      padding-left: 20px;
+
+      @include media('≥tablet') {
+        padding-left: 20px;
+      }
     }
 
     &.active {

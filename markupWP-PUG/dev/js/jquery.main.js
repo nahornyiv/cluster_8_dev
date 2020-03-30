@@ -2,7 +2,6 @@ jQuery(function() {
   initMobileNav();
 });
 
-
 // mobile menu init
 function initMobileNav() {
   jQuery('body').mobileNav({
@@ -10,7 +9,6 @@ function initMobileNav() {
     menuOpener: '.nav-opener'
   });
 }
-
 
 /*
  * Simple Mobile Navigation

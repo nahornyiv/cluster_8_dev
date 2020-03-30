@@ -16,8 +16,8 @@ $breakpoints: (
   xs-phone: 320px,
   phone: 480px,
   tablet: 768px,
-  desktop: 1024px,
-  widescreen: 1300px
+  desktop: 992px,
+  widescreen: 1200px
 );
 
 // keywords
@@ -50,8 +50,6 @@ $media-expressions: (
 @import 'base/typography';
 
 @import 'components/buttons';
-@import 'components/section-banner';
-@import 'components/section-cards';
 // @import 'components/custom-radio-checkbox';
 // @import 'components/custom-select';
 // @import 'components/gravity-form-custom';

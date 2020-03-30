@@ -1,6 +1,3 @@
-// #main {
-//   @extend %clearfix;
-// }
 %navStyles {
   display: flex;
   flex-wrap: wrap;
@@ -22,13 +19,18 @@
   }
 }
 
-.content-column {
+[id="twocolumns"] {
   @include media('≥tablet') {
     display: flex;
   }
 }
 
-#content {
+[id="content"] {
+  padding: {
+    top: 30px;
+    bottom: 30px;
+  }
+
   @include media('≥tablet') {
     width: 70%;
   }
@@ -38,7 +40,12 @@
   }
 }
 
-#sidebar {
+[id="sidebar"] {
+  padding: {
+    top: 30px;
+    bottom: 30px;
+  }
+
   @include media('≥tablet') {
     width: 30%;
     padding-left: 30px;
@@ -113,7 +120,7 @@
   .prev {
     @include animate(background);
     @extend %navWPBtn;
-    
+
     max-width: 49%;
 
     @include media('<tablet') {
@@ -149,7 +156,7 @@
     a {
       @include animate(background);
       @extend %navWPBtn;
-      
+
       display: block;
 
       @include media('<tablet') {

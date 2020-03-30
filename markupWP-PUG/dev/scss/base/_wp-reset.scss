@@ -22,13 +22,18 @@
   }
 }
 
-.content-column {
+[id="twocolumns"] {
   @include media('≥tablet') {
     display: flex;
   }
 }
 
-#content {
+[id="content"] {
+  padding:{
+    top: 30px;
+    bottom: 30px;
+  }
+
   @include media('≥tablet') {
     width: 70%;
   }
@@ -38,7 +43,12 @@
   }
 }
 
-#sidebar {
+[id="sidebar"] {
+  padding:{
+    top: 30px;
+    bottom: 30px;
+  }
+
   @include media('≥tablet') {
     width: 30%;
     padding-left: 30px;
@@ -72,7 +82,7 @@
     float: left;
     margin-right: 5px;
 
-    #sidebar & {
+    [id="sidebar"] & {
       @include media('≥tablet') {
         width: 100%;
         margin: 0 0 5px;
@@ -113,7 +123,7 @@
   .prev {
     @include animate(background);
     @extend %navWPBtn;
-    
+
     max-width: 49%;
 
     @include media('<tablet') {
@@ -149,7 +159,7 @@
     a {
       @include animate(background);
       @extend %navWPBtn;
-      
+
       display: block;
 
       @include media('<tablet') {
