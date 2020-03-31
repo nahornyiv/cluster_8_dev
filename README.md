@@ -7,7 +7,7 @@ git clone https://github.com/Yura-Panchenko/cluster_8_dev.git
 <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/20921546.jpg" alt="image description" width="843">
 или скачать архив
 <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/19781421.jpg" alt="image description" width="1005">
----
+
 ## Лишнее удалить!!!
 После завершения скачивания
 <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/21935906.jpg" alt="image description" width="580">
