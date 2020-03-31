@@ -6,6 +6,11 @@ npm install
 ```
 npm install bootstrap
 ```
+##before sending the project to QA
+```
+gulp dist
+```
+<hr>
 ##use Responsive breakpoints
 ```
 // Extra small devices (portrait phones, less than 576px)

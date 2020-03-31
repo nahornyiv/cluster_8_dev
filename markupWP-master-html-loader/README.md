@@ -6,3 +6,7 @@ $ npm install
 ```
 $ gulp
 ```
+##before sending the project to QA
+```
+gulp dist
+```
