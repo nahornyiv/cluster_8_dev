@@ -1,2 +1,2 @@
 <!-- cluster_8_dev -->
-##Чтобы начать разработку, надо сделать клон в папку проекта используя команду ```git clone https://github.com/Yura-Panchenko/cluster_8_dev.git``` или скачать архив <img src="images/19781421" alt="image description" width="1005">
+##Чтобы начать разработку, надо сделать клон в папку проекта используя команду ```git clone https://github.com/Yura-Panchenko/cluster_8_dev.git``` или скачать архив <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/19781421.jpg" alt="image description" width="1005">
