@@ -36,14 +36,17 @@ $ npm install bootstrap
 $ gulp
 ```
 <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/22671968.jpg" alt="image description" width="594">
+
 ## Продолжение проекта
 для последующей работы мы запускаем только команду
 ```
 $ gulp
 ```
+
 ## Перед постановкой на QA или перед отправкой клиенту нам надо почистить код и ужать картинки, для этого запускаем команду
+
 ```
-gulp dist
+$ gulp dist
 ```
 <img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/23037218.jpg" alt="image description" width="594" height="62">
 
