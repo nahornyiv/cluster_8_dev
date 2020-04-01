@@ -65,3 +65,8 @@ $ gulp dist
 	- header
 	- footer
 * в папку scss соответственно scss
+
+# PUG
+****
+* для добавленя класса на боди на нудной нам странице, добавляем переменную на страницу с нужным нам классом
+	<img src="https://github.com/Yura-Panchenko/cluster_8_dev/blob/master/images/14i0336x21my885o31.jpg" alt="image description" width="893">
