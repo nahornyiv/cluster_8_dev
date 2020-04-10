@@ -214,7 +214,7 @@ gulp.task('watch', function(cb) {
 	});
 
 	gulp.watch(
-		path.resolve(__dirname, settings.pugDir.entry + '/*.pug'),
+		[path.resolve(__dirname, settings.pugDir.entry + '/*.pug') , path.resolve(__dirname, settings.pugDir.entry + '/inc/**/*.pug')],
 		gulp.series('pugPages')
 	).on('unlink', function(filePath) {
 		delete plugins.cached.caches.pugPages[path.resolve(filePath)];
