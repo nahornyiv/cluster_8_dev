@@ -1,11 +1,94 @@
 // Colors
   // Color calculator - http://razorjam.github.io/sasscolourfunctioncalculator/
   // Color names - http://name-of-color.com/
+  // Color system
 
-  $gray:               #999;
-  $black:              #000;
-  $white:              #fff;
-  $blue:               #5b759e;
+  $white:    #fff !default;
+  $gray: #ddd !default;
+  $gray-100: #f8f9fa !default;
+  $gray-200: #e9ecef !default;
+  $gray-300: #dee2e6 !default;
+  $gray-400: #ced4da !default;
+  $gray-500: #adb5bd !default;
+  $gray-600: #6c757d !default;
+  $gray-700: #495057 !default;
+  $gray-800: #343a40 !default;
+  $gray-900: #212529 !default;
+  $black:    #000 !default;
+
+  $grays: () !default;
+  // stylelint-disable-next-line scss/dollar-variable-default
+  $grays: map-merge(
+    (
+      "100": $gray-100,
+      "200": $gray-200,
+      "300": $gray-300,
+      "400": $gray-400,
+      "500": $gray-500,
+      "600": $gray-600,
+      "700": $gray-700,
+      "800": $gray-800,
+      "900": $gray-900
+    ),
+    $grays
+  );
+
+  $blue:    #007bff !default;
+  $indigo:  #6610f2 !default;
+  $purple:  #6f42c1 !default;
+  $pink:    #e83e8c !default;
+  $red:     #dc3545 !default;
+  $orange:  #fd7e14 !default;
+  $yellow:  #ffc107 !default;
+  $green:   #28a745 !default;
+  $teal:    #20c997 !default;
+  $cyan:    #17a2b8 !default;
+
+  $colors: () !default;
+  // stylelint-disable-next-line scss/dollar-variable-default
+  $colors: map-merge(
+    (
+      "blue":       $blue,
+      "indigo":     $indigo,
+      "purple":     $purple,
+      "pink":       $pink,
+      "red":        $red,
+      "orange":     $orange,
+      "yellow":     $yellow,
+      "green":      $green,
+      "teal":       $teal,
+      "cyan":       $cyan,
+      "white":      $white,
+      "gray":       $gray-600,
+      "gray-dark":  $gray-800
+    ),
+    $colors
+  );
+
+  $primary:       $blue !default;
+  $secondary:     $gray-600 !default;
+  $success:       $green !default;
+  $info:          $cyan !default;
+  $warning:       $yellow !default;
+  $danger:        $red !default;
+  $light:         $gray-100 !default;
+  $dark:          $gray-800 !default;
+
+  $theme-colors: () !default;
+  // stylelint-disable-next-line scss/dollar-variable-default
+  $theme-colors: map-merge(
+    (
+      "primary":    $primary,
+      "secondary":  $secondary,
+      "success":    $success,
+      "info":       $info,
+      "warning":    $warning,
+      "danger":     $danger,
+      "light":      $light,
+      "dark":       $dark
+    ),
+    $theme-colors
+  );
 
 // fonts name
   $base-font-sans-serif:        'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
@@ -24,6 +107,10 @@
   $line-height-base-lagre:      1.2 !default;
   $base-font-family:            $base-font !default;
   $base-min-width:              320px;
+
+// base variables
+  $base-radius:                 0;
+  $base-radius-small:           0;
 
 // container settings
   $max-width-center-container:  1200px;
@@ -99,26 +186,40 @@
 
 // Buttons
   // btn default
-  $btn-color:                         $black !default;
-  $btn-background:                    $gray !default;
-  $btn-border-color:                  $black !default;
+  $btn-border-width:                  1px  !default;
+  // $btn-border:                        $btn-border-width solid transparent !default;
+  $btn-border-radius:                 $base-radius;
+  $btn-border-radius-sm:              $base-radius-small;
+  $btn-padding:                       10px 20px !default;
+  $btn-padding-sm:                    4px 10px !default;
+  $btn-font-size:                     15px !default;
+  $btn-line-height:                   $btn-font-size  + 2;
+
+  $btn-background:                    $black !default;
+  $btn-border:                        $btn-background !default;
+  $btn-color:                         $white !default;
   // hover
-  $btn-hover-background:              $black !default;
+  $btn-hover-background:              darken($btn-background, 10%) !default;
+  $btn-hover-border:                  $btn-hover-background !default;
   $btn-hover-color:                   $white !default;
+
   // btn primary
-  $btn-color-primary:                 $blue !default;
-  $btn-background-primary:            $white !default;
-  $btn-border-color-primary:          $blue !default;
+  $btn-background-primary:            $primary !default;
+  $btn-border-primary:                $primary !default;
+  $btn-color-primary:                 $white !default;
   // hover
-  $btn-hover-background-primary:      $blue !default;
+  $btn-hover-background-primary:      darken($primary, 10%) !default;
+  $btn-hover-border-primary:          $btn-hover-background-primary !default;
   $btn-hover-color-primary:           $white !default;
 
-// buttons default
-  $btn-border-width:                  1px  !default;
-  $btn-border:                        $btn-border-width solid transparent !default;
-  $btn-padding:                       10px 20px !default;
-  $btn-font-size:                     $font-size-base - 2 !default;
-  $btn-line-height:                   $font-size-base + 2;
+  // btn warning
+  $btn-background-warning:            $warning !default;
+  $btn-border-warning:                $btn-background-warning !default;
+  $btn-color-warning:                 $white !default;
+  // hover
+  $btn-hover-background-warning:      darken($warning, 10%) !default;
+  $btn-hover-border-warning:          $btn-hover-background-warning !default;
+  $btn-hover-color-warning:           $white !default;
 
 // Forms
   $input-font-size:                   $font-size-base; // font size for forms elements

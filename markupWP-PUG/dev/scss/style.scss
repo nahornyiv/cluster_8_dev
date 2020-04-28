@@ -49,6 +49,8 @@ $media-expressions: (
 @import 'base/wp-reset';
 @import 'base/typography';
 
+@import 'layout/header';
+
 @import 'components/buttons';
 @import 'components/section-banner';
 @import 'components/section-cards';
@@ -56,6 +58,5 @@ $media-expressions: (
 // @import 'components/custom-select';
 // @import 'components/gravity-form-custom';
 
-@import 'layout/header';
 @import 'layout/common';
 @import 'layout/footer';
