@@ -13,7 +13,7 @@ module.exports = {
 		entry: `${devDir}/scss`,
 		output: `${publicDir}/css`,
 		mainFileName: 'main',
-		mainFileOutput: 'public/css'
+		mainFileOutput: `${publicDir}/css`
 	},
 	pugDir: {
 		entry: devDir,
