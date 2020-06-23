@@ -152,17 +152,18 @@ gulp.task('imagesOptimize', () => {
 });
 
 const beautifyMainCss = () => {
-	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName);
-
+	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput);
 	return gulp.src(
-			`${cssUrl}.css`,
+			[
+				path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName + '.css')
+			],
 			{
-				base: path.resolve(__dirname, settings.scssDir.output)
+				base: cssUrl
 			}
 		)
 		.pipe(plugins.csscomb())
 		.pipe(gulp.dest(cssUrl))
-		.pipe(plugins.count('beautified css files', {logFiles: true}));
+		.pipe(plugins.count('beautified main css files', {logFiles: true}));
 };
 
 const beautifyOtherCss = () => {
