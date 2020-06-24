@@ -184,7 +184,7 @@ const beautifyOtherCss = () => {
 };
 
 // css beautify
-gulp.task('beautify', gulp.parallel(beautifyMainCss, beautifyOtherCss));
+gulp.task('beautify', gulp.parallel(beautifyOtherCss, beautifyMainCss));
 
 gulp.task('assets', (cb) => {
 	return gulp.src(
