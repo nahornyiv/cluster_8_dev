@@ -172,7 +172,8 @@ const beautifyOtherCss = () => {
 	return gulp.src(
 			[
 				path.resolve(__dirname, settings.scssDir.output + '/*css'),
-				path.resolve(__dirname, settings.scssDir.output + '/*min.css')
+				path.resolve(__dirname, settings.scssDir.output + '/*min.css'),
+				'!' + path.resolve(__dirname, settings.scssDir.output + '/**/' + settings.scssDir.mainFileName + '.css')
 			],
 			{
 				base: cssUrl
@@ -184,7 +185,7 @@ const beautifyOtherCss = () => {
 };
 
 // css beautify
-gulp.task('beautify', gulp.parallel(beautifyOtherCss, beautifyMainCss));
+gulp.task('beautify', gulp.parallel(beautifyMainCss, beautifyOtherCss));
 
 gulp.task('assets', (cb) => {
 	return gulp.src(
