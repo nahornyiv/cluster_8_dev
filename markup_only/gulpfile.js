@@ -13,9 +13,6 @@ const postcssPlagins = [
 		browsers: ['last 2 version']
 	})
 ];
-const cssmin = require('gulp-cssmin');
-const rename = require('gulp-rename');
-const minify = require('gulp-minify');
 // ES-2015 handler
 gulp.task('webpack', (cb) => {
 	plugins.webpack(webpackconfig(isDevelopment), (err, stats) => {
@@ -134,9 +131,6 @@ gulp.task('copyScripts', () => {
 		}
 	)
 	.pipe(plugins.cached('copyScripts'))
-	.pipe(minify({
-		ignoreFiles: ['*.min.js']
-	}))
 	.pipe(gulp.dest(settings.jsDir.output))
 	.pipe(plugins.count('## JS files was copied', {logFiles: true}));
 });
@@ -158,19 +152,18 @@ gulp.task('imagesOptimize', () => {
 });
 
 const beautifyMainCss = () => {
-	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName);
-
+	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput);
 	return gulp.src(
-			`${cssUrl}.css`,
+			[
+				path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName + '.css')
+			],
 			{
-				base: path.resolve(__dirname, settings.scssDir.output)
+				base: cssUrl
 			}
 		)
 		.pipe(plugins.csscomb())
-		.pipe(plugins.count('beautified css files', {logFiles: true}))
 		.pipe(gulp.dest(cssUrl))
-		.pipe(cssmin())
-        	.pipe(rename({suffix: '.min'}));
+		.pipe(plugins.count('beautified main css files', {logFiles: true}));
 };
 
 const beautifyOtherCss = () => {
@@ -179,7 +172,8 @@ const beautifyOtherCss = () => {
 	return gulp.src(
 			[
 				path.resolve(__dirname, settings.scssDir.output + '/*css'),
-				path.resolve(__dirname, settings.scssDir.output + '/*min.css')
+				path.resolve(__dirname, settings.scssDir.output + '/*min.css'),
+				'!' + path.resolve(__dirname, settings.scssDir.output + '/**/' + settings.scssDir.mainFileName + '.css')
 			],
 			{
 				base: cssUrl
