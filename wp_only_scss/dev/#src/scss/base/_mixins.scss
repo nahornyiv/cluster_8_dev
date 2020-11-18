@@ -224,6 +224,21 @@ $animation-speed: 0.3s !default;
   transition: $list;
 }
 
+
+/// Mixin for styling form-placeholders
+/// @example scss - Usage
+///   @include placeholder {
+///    color: #333;
+///   }
+///
+///   input[type='text'],
+///   input[type='tel'],
+///   input[type='email'] {
+///     @include placeholder {
+///      color: red;
+///     }
+///   }
+
 @mixin placeholder {
   &::-webkit-input-placeholder {
     @content;
@@ -269,3 +284,65 @@ $animation-speed: 0.3s !default;
   }
 }
 
+// Button sizes
+@mixin button-color($btn-background, $btn-color, $btn-border, $btn-hover-background, $btn-hover-border, $btn-hover-color) {
+  background: $btn-background;
+  color: $btn-color;
+  border: $btn-border;
+
+  &:hover {
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    border: $btn-hover-border;
+  }
+}
+
+@mixin add-params() {
+  @each $val, $media in $grid {
+    &.df-rr-#{$val} {
+      @include media('≥' + $media) {
+        flex-direction: row-reverse;
+      }
+    }
+
+    &.df-aic-#{$val} {
+      @include media('≥' + $media) {
+        align-items: center;
+      }
+    }
+  }
+}
+
+// flex grid
+@mixin flex-grid() {
+  @each $val, $media in $grid {
+    @for $gutter from 1 through 12 {
+      .col-#{$val}-#{$gutter} {
+        @include media('≥' + $media) {
+          flex: 1 0 calc(100% / 12 * #{$gutter});
+          max-width: calc(100% / 12 * #{$gutter});
+        }
+      }
+    }
+
+    @for $gutter from 0 through 11 {
+      .col-offset-#{$val}-#{$gutter} {
+        @include media('≥' + $media) {
+          margin-left: calc(100% / 12 * #{$gutter});
+        }
+      }
+    }
+  }
+}
+
+@mixin v-center($min-height: 400px) {
+  display: flex;
+
+  > * {
+    min-height: $min-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+}
