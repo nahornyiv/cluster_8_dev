@@ -138,7 +138,7 @@ gulp.task('copyScripts', () => {
 
 // image optimization
 gulp.task('imagesOptimize', () => {
-	const entry = path.resolve(__dirname, settings.imagesDir.entry + '/**/*.+(png|jpg|gif|svg)');
+	const entry = path.resolve(__dirname, settings.imagesDir.entry + '/**/*.+(png|jpg|gif)');
 	const output = path.resolve(__dirname, settings.imagesDir.output);
 
 	return gulp.src(
