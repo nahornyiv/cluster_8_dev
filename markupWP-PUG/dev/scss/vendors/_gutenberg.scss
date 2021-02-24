@@ -739,8 +739,6 @@
   }
   .aligncenter, .alignleft, .alignright, &.is-resized {
     display: table;
-    margin-left: 0;
-    margin-right: 0;
   }
   .aligncenter > figcaption, .alignleft > figcaption, .alignright > figcaption, &.is-resized > figcaption {
     display: table-caption;
