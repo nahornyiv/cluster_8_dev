@@ -11,6 +11,12 @@ Tags: one-column, two-columns
 Theme URI:
 */
 
+body {
+  color: #000;
+  
+  font-size: 10px;
+}
+
 // devices viewport width starts at:
 $breakpoints: (
   xs-phone: 320px,
