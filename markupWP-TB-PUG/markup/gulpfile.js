@@ -37,75 +37,122 @@ gulp.task('allSass', () => {
 			base: entryDir
 		}
 	)
-	.pipe(plugins.cached('allSass'))
-	.pipe(plugins.sassMultiInheritance({dir: entryDir + '/'}))
-	.pipe(plugins.plumber(function(error) {
-		plugins.util.log(plugins.util.colors.bold.red(error.message));
-		plugins.util.beep();
-		this.emit('end');
-	}))
-	.pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
-	.pipe(plugins.sass().on('error', plugins.sass.logError))
-	.pipe(plugins.postcss(postcssPlagins))
-	.pipe(plugins.if(isDevelopment, plugins.sourcemaps.write('./')))
-	.pipe(plugins.plumber.stop())
-	.pipe(gulp.dest(function(file) {
-		return file.stem === settings.scssDir.mainFileName || file.stem === settings.scssDir.mainFileName + '.css' ?
-			path.resolve(__dirname, settings.scssDir.mainFileOutput) :
-			path.resolve(__dirname, settings.scssDir.output);
-	}))
-	.pipe(plugins.count('## files sass to css compiled', {logFiles: true}))
-	.pipe(browserSync.stream({match: '**/*.css'}));
-});
-
-// compile from pug to html
-gulp.task('pugPages', function(cb) {
-	return gulp.src(
-			[
-				path.resolve(__dirname, settings.pugDir.entry + '/**/*.pug'),
-				'!' + path.resolve(__dirname, settings.pugDir.entry + '/**/_*.pug')
-			],
-			{
-				base: path.resolve(__dirname, settings.pugDir.entry)
-			}
-		)
-		.pipe(plugins.cached('pugPages'))
-		.pipe(plugins.plumber(function(error) {
+		.pipe(plugins.cached('allSass'))
+		.pipe(plugins.sassMultiInheritance({ dir: entryDir + '/' }))
+		.pipe(plugins.plumber(function (error) {
 			plugins.util.log(plugins.util.colors.bold.red(error.message));
 			plugins.util.beep();
 			this.emit('end');
 		}))
-		.pipe(plugins.pug({pretty: '\t'})/*.on('error', err => {
+		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
+		.pipe(plugins.sass().on('error', plugins.sass.logError))
+		.pipe(plugins.groupCssMediaQueries())
+		.pipe(plugins.postcss(postcssPlagins))
+		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.write('./')))
+		.pipe(plugins.plumber.stop())
+		.pipe(gulp.dest(function (file) {
+			return file.stem === settings.scssDir.mainFileName || file.stem === settings.scssDir.mainFileName + '.css' ?
+				path.resolve(__dirname, settings.scssDir.mainFileOutput) :
+				path.resolve(__dirname, settings.scssDir.output);
+		}))
+		.pipe(plugins.count('## files sass to css compiled', { logFiles: true }))
+		.pipe(browserSync.stream({ match: '**/*.css' }));
+});
+
+// mincss and group media
+gulp.task('pur', function () {
+	return gulp.src(path.resolve(__dirname, settings.scssDir.mainFileOutput + '/style.css'))
+		.pipe(plugins.cssPurge({
+			trim: false,
+			shorten: true,
+			short_zero: true,
+			short_hexcolor: true,
+			short_font: true,
+			short_background: true,
+			short_border: true,
+			format: true,
+			format_font_family: true,
+			verbose: false
+		}))
+		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)));
+});
+
+// mincss and group media
+gulp.task('purmin', function () {
+	return gulp.src(path.resolve(__dirname, settings.scssDir.mainFileOutput + '/style.css'))
+		.pipe(plugins.cssPurge({
+			trim: false,
+			shorten: true,
+			short_zero: true,
+			short_hexcolor: true,
+			short_font: true,
+			short_background: true,
+			short_border: true,
+			format: true,
+			format_font_family: true,
+			verbose: false
+		}))
+		.pipe(gulp.src([
+			path.resolve(__dirname, settings.scssDir.mainFileOutput + '/*.css'),
+			path.resolve(__dirname, settings.scssDir.output + '/*.css')
+		]))
+		.pipe(plugins.cssPurge({
+			trim: true
+		}))
+		.pipe(plugins.rename({
+			extname: ".min.css"
+		}))
+		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.output)));
+});
+
+// compile from pug to html
+gulp.task('pugPages', function (cb) {
+	return gulp.src(
+		[
+			path.resolve(__dirname, settings.pugDir.entry + '/**/*.pug'),
+			'!' + path.resolve(__dirname, settings.pugDir.entry + '/**/_*.pug')
+		],
+		{
+			base: path.resolve(__dirname, settings.pugDir.entry)
+		}
+	)
+		.pipe(plugins.cached('pugPages'))
+		.pipe(plugins.plumber(function (error) {
+			plugins.util.log(plugins.util.colors.bold.red(error.message));
+			plugins.util.beep();
+			this.emit('end');
+		}))
+		.pipe(plugins.pug({ pretty: '\t' })/*.on('error', err => {
 			console.log(err);
 			cb();
 		})*/)
 		.pipe(plugins.plumber.stop())
 		.pipe(gulp.dest(path.resolve(__dirname, settings.pugDir.output)))
-		.pipe(plugins.count('## pug files compiled', {logFiles: true}));
+		.pipe(plugins.count('## pug files compiled', { logFiles: true }));
 });
 
-gulp.task('pugAll', function(cb) {
+gulp.task('pugAll', function (cb) {
 	return gulp.src(
-			[
-				path.resolve(__dirname, settings.pugDir.entry + '/*.pug')
-			],
-			{
-				base: path.resolve(__dirname, settings.pugDir.entry)
-			}
-		)
-		.pipe(plugins.plumber(function(error) {
+		[
+			path.resolve(__dirname, settings.pugDir.entry + '/*.pug')
+		],
+		{
+			base: path.resolve(__dirname, settings.pugDir.entry)
+		}
+	)
+		.pipe(plugins.plumber(function (error) {
 			plugins.util.log(plugins.util.colors.bold.red(error.message));
 			plugins.util.beep();
 			this.emit('end');
 		}))
-		.pipe(plugins.pug({pretty: '\t'})/*
+		.pipe(plugins.pug({ pretty: '\t' })/*
 		.on('error', err => {
 			console.log(err);
 			cb();
 		})*/)
 		// .pipe(plugins.plumber.stop())
 		.pipe(gulp.dest(path.resolve(__dirname, settings.pugDir.output)))
-		.pipe(plugins.count('## pug files compiled', {logFiles: true}));
+		.pipe(plugins.count('## pug files compiled', { logFiles: true }));
 });
 
 // server
@@ -130,9 +177,9 @@ gulp.task('copyScripts', () => {
 			base: path.resolve(__dirname, settings.jsDir.entry)
 		}
 	)
-	.pipe(plugins.cached('copyScripts'))
-	.pipe(gulp.dest(settings.jsDir.output))
-	.pipe(plugins.count('## JS files was copied', {logFiles: true}));
+		.pipe(plugins.cached('copyScripts'))
+		.pipe(gulp.dest(settings.jsDir.output))
+		.pipe(plugins.count('## JS files was copied', { logFiles: true }));
 });
 
 // image optimization
@@ -142,73 +189,39 @@ gulp.task('imagesOptimize', () => {
 
 	return gulp.src(
 		entry,
-			{
-				base: path.resolve(__dirname, settings.imagesDir.entry)
-			}
-		)
+		{
+			base: path.resolve(__dirname, settings.imagesDir.entry)
+		}
+	)
 		.pipe(plugins.imagemin())
 		.pipe(gulp.dest(output))
-		.pipe(plugins.count('## images was optimize', {logFiles: true}));
+		.pipe(plugins.count('## images was optimize', { logFiles: true }));
 });
-
-const beautifyMainCss = () => {
-	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName);
-
-	return gulp.src(
-			`${cssUrl}.css`,
-			{
-				base: path.resolve(__dirname, settings.scssDir.output)
-			}
-		)
-		.pipe(plugins.csscomb())
-		.pipe(gulp.dest(cssUrl))
-		.pipe(plugins.count('beautified css files', {logFiles: true}));
-};
-
-const beautifyOtherCss = () => {
-	const cssUrl = path.resolve(__dirname, settings.scssDir.output);
-
-	return gulp.src(
-			[
-				path.resolve(__dirname, settings.scssDir.output + '/*css'),
-				path.resolve(__dirname, settings.scssDir.output + '/*min.css')
-			],
-			{
-				base: cssUrl
-			}
-		)
-		.pipe(plugins.csscomb())
-		.pipe(gulp.dest(cssUrl))
-		.pipe(plugins.count('beautified css files', {logFiles: true}));
-};
-
-// css beautify
-gulp.task('beautify', gulp.parallel(beautifyMainCss, beautifyOtherCss));
 
 gulp.task('assets', (cb) => {
 	return gulp.src(
-			path.resolve(__dirname, settings.assetsDir + '/**'),
-			{
-				base: path.resolve(__dirname, settings.assetsDir)
-			}
-		)
+		path.resolve(__dirname, settings.assetsDir + '/**'),
+		{
+			base: path.resolve(__dirname, settings.assetsDir)
+		}
+	)
 		.pipe(plugins.cached('assets'))
 		.pipe(gulp.dest(path.resolve(__dirname, settings.publicDir)))
-		.pipe(plugins.count('## assets files copied', {logFiles: true}));
+		.pipe(plugins.count('## assets files copied', { logFiles: true }));
 });
 
-gulp.task('watch', function(cb) {
+gulp.task('watch', function (cb) {
 	gulp.watch(
 		path.resolve(__dirname, settings.scssDir.entry + '/**/*.scss'),
 		gulp.series('allSass')
-	).on('unlink', function(filePath) {
+	).on('unlink', function (filePath) {
 		delete plugins.cached.caches.allSass[path.resolve(filePath)];
 	});
 
 	gulp.watch(
-		[path.resolve(__dirname, settings.pugDir.entry + '/*.pug') , path.resolve(__dirname, settings.pugDir.entry + '/inc/**/*.pug')],
+		[path.resolve(__dirname, settings.pugDir.entry + '/*.pug'), path.resolve(__dirname, settings.pugDir.entry + '/inc/**/*.pug')],
 		gulp.series('pugPages')
-	).on('unlink', function(filePath) {
+	).on('unlink', function (filePath) {
 		delete plugins.cached.caches.pugPages[path.resolve(filePath)];
 	});
 
@@ -223,7 +236,7 @@ gulp.task('watch', function(cb) {
 			'!' + path.resolve(__dirname, settings.jsES6.entry)
 		],
 		gulp.series('copyScripts')
-	).on('unlink', function(filePath) {
+	).on('unlink', function (filePath) {
 		delete plugins.cached.caches.copyScripts[path.resolve(filePath)];
 	});
 
@@ -235,10 +248,10 @@ gulp.task('watch', function(cb) {
 	gulp.watch(
 		path.resolve(__dirname, settings.assetsDir + '/**'),
 		gulp.series('assets')
-	).on('error', () => {})
-	.on('unlink', function(filePath) {
-		delete plugins.cached.caches.assets[path.resolve(filePath)];
-	});
+	).on('error', () => { })
+		.on('unlink', function (filePath) {
+			delete plugins.cached.caches.assets[path.resolve(filePath)];
+		});
 
 	gulp.watch(
 		[
@@ -251,7 +264,7 @@ gulp.task('watch', function(cb) {
 });
 
 gulp.task('clear', (cb) => {
-	plugins.del(path.resolve(__dirname, settings.publicDir), {read: false}).then(paths => {
+	plugins.del(path.resolve(__dirname, settings.publicDir), { read: false }).then(paths => {
 		cb();
 	});
 });
@@ -272,6 +285,18 @@ gulp.task('build', gulp.parallel(
 	'allSass',
 	'pugPages'
 ));
+
+gulp.task('distmin', gulp.series(
+	(cb) => {
+		isDevelopment = false;
+		cb();
+	},
+	'clear',
+	'build',
+	'purmin',
+	gulp.parallel('imagesOptimize')
+));
+
 gulp.task('dist', gulp.series(
 	(cb) => {
 		isDevelopment = false;
@@ -279,7 +304,9 @@ gulp.task('dist', gulp.series(
 	},
 	'clear',
 	'build',
-	gulp.parallel('imagesOptimize', 'beautify')
+	'pur',
+	gulp.parallel('imagesOptimize')
 ));
+
 gulp.task('default', gulp.series('build', 'server', 'watch'));
 

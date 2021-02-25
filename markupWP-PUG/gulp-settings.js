@@ -1,7 +1,9 @@
 const devDir = 'dev';
 const publicDir = 'public';
+const wpDir = 'wp-content/themes/theme_name_folder'; //path to theme root folder
 
 module.exports = {
+	wpDir,
 	publicDir,
 	devDir,
 	assetsDir: `${devDir}/assets`,
@@ -26,5 +28,9 @@ module.exports = {
 	jsES6: {
 		entry: `${devDir}/js/es6`,
 		names: ['main']
+	},
+	wpDevDir: {
+		outputFonts: `${wpDir}/fonts/`,
+		outputjs: `${wpDir}/js/`
 	}
 };

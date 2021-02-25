@@ -8,6 +8,7 @@ const path = require('path');
 const webpackconfig = require('./webpack.config.js');
 const browserSync = require('browser-sync').create();
 const settings = require('./gulp-settings.js');
+const { src } = require('gulp');
 const postcssPlagins = [
 	plugins.autoprefixer({
 		browsers: ['last 2 version']
@@ -212,7 +213,43 @@ gulp.task('assets', (cb) => {
 		.pipe(plugins.count('## assets files copied', { logFiles: true }));
 });
 
+gulp.task('wpfont', (cb) => {
+	return gulp.src(path.resolve(__dirname, settings.assetsDir + '/fonts/**'))
+		.pipe(plugins.cached('wp'))
+		.pipe(gulp.dest(path.resolve(__dirname, settings.wpDevDir.outputFonts)))
+		.pipe(plugins.count('## assets files copied', { logFiles: true }));
+});
+
+gulp.task('wpjs', (cb) => {
+	return gulp.src(path.resolve(__dirname, settings.jsDir.output + '/**'))
+		.pipe(plugins.cached('wpjs'))
+		.pipe(gulp.dest(path.resolve(__dirname, settings.wpDevDir.outputjs)))
+		.pipe(plugins.count('## assets files copied', { logFiles: true }));
+});
+
+gulp.task('wpstyle', (cb) => {
+	return gulp.src(path.resolve(__dirname, settings.scssDir.mainFileOutput + '/style.css'))
+		.pipe(plugins.cached('wpstyle'))
+		.pipe(gulp.dest(path.resolve(__dirname, settings.wpDir)))
+		.pipe(plugins.count('## assets files copied', { logFiles: true }));
+});
+
 gulp.task('watch', function (cb) {
+	gulp.watch(
+		path.resolve(__dirname, settings.assetsDir + '/fonts/**'),
+		gulp.series('wpfont')
+	);
+
+	gulp.watch(
+		path.resolve(__dirname, settings.jsDir.output + '/**'),
+		gulp.series('wpjs')
+	);
+
+	gulp.watch(
+		path.resolve(__dirname, settings.publicDir + '/style.css'),
+		gulp.series('wpstyle')
+	);
+
 	gulp.watch(
 		path.resolve(__dirname, settings.scssDir.entry + '/**/*.scss'),
 		gulp.series('allSass')
@@ -288,6 +325,15 @@ gulp.task('build', gulp.parallel(
 	'pugPages'
 ));
 
+gulp.task('buildwp', gulp.parallel(
+	'copyScripts',
+	'allSass',
+	'wpfont',
+	'wpjs',
+	'wpstyle',
+	'pugPages'
+));
+
 gulp.task('distmin', gulp.series(
 	(cb) => {
 		isDevelopment = false;
@@ -310,5 +356,20 @@ gulp.task('dist', gulp.series(
 	gulp.parallel('imagesOptimize')
 ));
 
+
+gulp.task('distwp', gulp.series(
+	(cb) => {
+		isDevelopment = false;
+		cb();
+	},
+	'clear',
+	'build',
+	'pur',
+	'wpstyle',
+	gulp.parallel('imagesOptimize')
+));
+
 gulp.task('default', gulp.series('build', 'server', 'watch'));
+
+gulp.task('devwp', gulp.series('buildwp', 'server', 'watch'));
 
