@@ -10,3 +10,7 @@ $ gulp
 ```
 gulp dist
 ```
+##receive min css file
+```
+gulp distmin
+```

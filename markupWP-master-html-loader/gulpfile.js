@@ -88,9 +88,9 @@ gulp.task('copyScripts', () => {
 		}
 	)
 	.pipe(plugins.cached('copyScripts'))
-	.pipe(minify({
-		ignoreFiles: ['*.min.js']
-	}))
+	// .pipe(minify({
+	// 	ignoreFiles: ['*.min.js']
+	// }))
 	.pipe(gulp.dest(settings.jsDir.output))
 	.pipe(plugins.count('## JS files was copied', {logFiles: true}));
 });

@@ -46,7 +46,6 @@ gulp.task('allSass', () => {
 	}))
 	.pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
 	.pipe(plugins.sass().on('error', plugins.sass.logError))
-	.pipe(plugins.groupCssMediaQueries())
 	.pipe(plugins.postcss(postcssPlagins))
 	.pipe(plugins.if(isDevelopment, plugins.sourcemaps.write('./')))
 	.pipe(plugins.plumber.stop())
@@ -57,49 +56,6 @@ gulp.task('allSass', () => {
 	}))
 	.pipe(plugins.count('## files sass to css compiled', {logFiles: true}))
 	.pipe(browserSync.stream({match: '**/*.css'}));
-});
-
-// mincss and group media
-gulp.task('pur', function() {
-	return gulp.src(path.resolve(__dirname, settings.scssDir.mainFileOutput + '/style.css'))
-		.pipe(plugins.cssPurge({
-			trim : false,
-			shorten : true,
-			short_zero: true,
-			short_hexcolor: true,
-			short_font: true,
-			short_background: true,
-			short_border: true,
-			format: true,
-			format_font_family: true,
-			verbose : false
-		}))
-		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)));
-});
-
-// mincss and group media
-gulp.task('purmin', function() {
-	return gulp.src(path.resolve(__dirname, settings.scssDir.mainFileOutput + '/style.css'))
-		.pipe(plugins.cssPurge({
-			trim : false,
-			shorten : true,
-			short_zero: true,
-			short_hexcolor: true,
-			short_font: true,
-			short_background: true,
-			short_border: true,
-			format: true,
-			format_font_family: true,
-			verbose : false
-		}))
-		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)))
-		.pipe(plugins.cssPurge({
-			trim : true
-		}))
-		.pipe(plugins.rename({
-			extname: ".min.css"
-		}))
-		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)));
 });
 
 // compile from pug to html
@@ -181,7 +137,7 @@ gulp.task('copyScripts', () => {
 
 // image optimization
 gulp.task('imagesOptimize', () => {
-	const entry = path.resolve(__dirname, settings.imagesDir.entry + '/**/*.+(png|jpg|gif|svg)');
+	const entry = path.resolve(__dirname, settings.imagesDir.entry + '/**/*.+(png|jpg|gif)');
 	const output = path.resolve(__dirname, settings.imagesDir.output);
 
 	return gulp.src(
@@ -197,7 +153,6 @@ gulp.task('imagesOptimize', () => {
 
 const beautifyMainCss = () => {
 	const cssUrl = path.resolve(__dirname, settings.scssDir.mainFileOutput);
-
 	return gulp.src(
 			[
 				path.resolve(__dirname, settings.scssDir.mainFileOutput + '/' + settings.scssDir.mainFileName + '.css')
@@ -208,7 +163,7 @@ const beautifyMainCss = () => {
 		)
 		.pipe(plugins.csscomb())
 		.pipe(gulp.dest(cssUrl))
-		.pipe(plugins.count('beautified css files', {logFiles: true}));
+		.pipe(plugins.count('beautified main css files', {logFiles: true}));
 };
 
 const beautifyOtherCss = () => {
@@ -319,40 +274,6 @@ gulp.task('build', gulp.parallel(
 	'allSass',
 	'pugPages'
 ));
-
-// gulp.task('distmin', gulp.series(
-// 	(cb) => {
-// 		isDevelopment = false;
-// 		cb();
-// 	},
-// 	'clear',
-// 	'build',
-// 	'purmin',
-// 	gulp.parallel('imagesOptimize', 'beautify')
-// ));
-
-gulp.task('distmin', gulp.series(
-	(cb) => {
-		isDevelopment = false;
-		cb();
-	},
-	'clear',
-	'build',
-	'purmin',
-	gulp.parallel('imagesOptimize')
-));
-
-// gulp.task('dist', gulp.series(
-// 	(cb) => {
-// 		isDevelopment = false;
-// 		cb();
-// 	},
-// 	'clear',
-// 	'build',
-// 	'pur',
-// 	gulp.parallel('imagesOptimize', 'beautify')
-// ));
-
 gulp.task('dist', gulp.series(
 	(cb) => {
 		isDevelopment = false;
@@ -360,9 +281,7 @@ gulp.task('dist', gulp.series(
 	},
 	'clear',
 	'build',
-	'pur',
-	gulp.parallel('imagesOptimize')
+	gulp.parallel('imagesOptimize', 'beautify')
 ));
-
 gulp.task('default', gulp.series('build', 'server', 'watch'));
 
