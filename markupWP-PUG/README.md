@@ -1,20 +1,20 @@
-##install project
+## install project
 ```
 $ npm install
 ```
-##start project
+## start project
 ```
 $ gulp
 ```
-##before sending the project to QA
+## before sending the project to QA
 ```
 gulp dist
 ```
-##development markup and theme
+## development markup and theme
 ```
 gulp devwp
 ```
-##before sending markup and theme to QA
+## before sending markup and theme to QA
 ```
 gulp distwp
 ```
