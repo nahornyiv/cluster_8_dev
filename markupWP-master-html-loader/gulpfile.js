@@ -1,4 +1,4 @@
-'use strict';
+false'use strict';
 const gulp = require('gulp');
 const plugins = require('gulp-load-plugins')({
 	pattern: ['gulp-*', 'gulp.*', 'webpack', 'autoprefixer', 'del']
@@ -72,7 +72,7 @@ gulp.task('pur', function () {
 			short_background: true,
 			short_border: true,
 			format: true,
-			format_font_family: true,
+			format_font_family: false,
 			verbose: false
 		}))
 		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)));
@@ -90,7 +90,7 @@ gulp.task('purmin', function () {
 			short_background: true,
 			short_border: true,
 			format: true,
-			format_font_family: true,
+			format_font_family: false,
 			verbose: false
 		}))
 		.pipe(gulp.dest(path.resolve(__dirname, settings.scssDir.mainFileOutput)))
