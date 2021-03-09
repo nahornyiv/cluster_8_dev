@@ -11,15 +11,6 @@
   vertical-align: top;
   text-align: center;
 
-  @include media('<tablet') {
-    width: 100%;
-  }
-
-  @include media('>=desktop') {
-    min-width: 152px;
-    padding: 14px 30px;
-  }
-
   &-default {
     @include button-color($btn-background, $btn-color, $btn-border, $btn-hover-background, $btn-hover-border, $btn-hover-color);
   }
