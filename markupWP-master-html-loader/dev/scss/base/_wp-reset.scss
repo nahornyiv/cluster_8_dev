@@ -96,7 +96,7 @@
 .navigation,
 .navigation-comments {
   @extend %navStyles;
-
+  width: 100%;
   position: relative;
 
   .screen-reader-text {
@@ -144,20 +144,26 @@
 
 .navigation-single {
   @extend %navStyles;
-
+  justify-content: space-between;
+  align-items: stretch;
   width: 100%;
 
   .next,
   .prev {
-    max-width: 49%;
     display: flex;
     align-items: center;
+    padding: 0;
+    margin: 0;
+    max-width: 49%;
+    border: 0;
 
     a {
       @include animate(background);
       @extend %navWPBtn;
 
       display: block;
+      padding: $btn-padding;
+      border: $btn-border;
 
       @include media('<tablet') {
         font-size: 0;
@@ -177,26 +183,6 @@
           content: '«';
         }
       }
-    }
-  }
-}
-
-.navigation-single {
-  justify-content: space-between;
-  align-items: stretch;
-
-  .next,
-  .prev {
-    padding: 0;
-    margin: 0;
-    max-width: 49%;
-    display: flex;
-    align-items: center;
-    border: 0;
-
-    a {
-      padding: $btn-padding;
-      border: $btn-border;
     }
   }
 }
