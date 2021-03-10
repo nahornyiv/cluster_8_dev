@@ -1,4 +1,4 @@
-false'use strict';
+'use strict';
 const gulp = require('gulp');
 const plugins = require('gulp-load-plugins')({
 	pattern: ['gulp-*', 'gulp.*', 'webpack', 'autoprefixer', 'del']
