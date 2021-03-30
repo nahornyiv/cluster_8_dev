@@ -48,9 +48,9 @@ gulp.task('allSass', () => {
 		}))
 		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
 		.pipe(plugins.sass().on('error', plugins.sass.logError))
-		.pipe(plugins.groupCssMediaQueries())
 		.pipe(plugins.postcss(postcssPlagins))
 		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.write('./')))
+		.pipe(plugins.groupCssMediaQueries())
 		.pipe(plugins.plumber.stop())
 		.pipe(gulp.dest(function (file) {
 			return file.stem === settings.scssDir.mainFileName || file.stem === settings.scssDir.mainFileName + '.css' ?
