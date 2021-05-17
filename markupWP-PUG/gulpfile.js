@@ -70,10 +70,10 @@ gulp.task('pur', function () {
 			shorten: true,
 			short_zero: true,
 			short_hexcolor: true,
-			short_font: true,
+			short_font: false,
 			short_background: true,
 			short_border: true,
-			format: true,
+			format: false,
 			format_font_family: false,
 			verbose: false
 		}))
@@ -88,10 +88,10 @@ gulp.task('purmin', function () {
 			shorten: true,
 			short_zero: true,
 			short_hexcolor: true,
-			short_font: true,
+			short_font: false,
 			short_background: true,
 			short_border: true,
-			format: true,
+			format: false,
 			format_font_family: false,
 			verbose: false
 		}))
