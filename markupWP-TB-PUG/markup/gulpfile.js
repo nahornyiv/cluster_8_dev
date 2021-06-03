@@ -46,7 +46,7 @@ gulp.task('allSass', () => {
 		}))
 		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
 		.pipe(plugins.sass().on('error', plugins.sass.logError))
-		.pipe(plugins.groupCssMediaQueries())
+		//.pipe(plugins.groupCssMediaQueries())
 		.pipe(plugins.postcss(postcssPlagins))
 		.pipe(plugins.if(isDevelopment, plugins.sourcemaps.write('./')))
 		.pipe(plugins.plumber.stop())
